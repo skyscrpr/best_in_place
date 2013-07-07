@@ -68,9 +68,17 @@ module BestInPlace
       end
       if !opts[:sanitize].nil? && !opts[:sanitize]
         out << " data-sanitize='false'>"
-        out << display_value.to_s
+        if opts[:wrapped_inside_sky_div_class]
+          out << "<div class='#{opts[:wrapped_inside_sky_div_class]}'>#{display_value.to_s}</div>"
+        else
+          display_value.to_s
+        end
       else
-        out << ">#{h(display_value.to_s)}"
+        if opts[:wrapped_inside_sky_div_class]
+          out << "><div class='#{opts[:wrapped_inside_sky_div_class]}'>#{h(display_value.to_s)}</div>"
+        else
+          out << ">#{h(display_value.to_s)}"
+        end
       end
       out << "</span>"
       raw out
@@ -129,4 +137,3 @@ module BestInPlace
     end
   end
 end
-
